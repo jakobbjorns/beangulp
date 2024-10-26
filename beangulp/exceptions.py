@@ -30,16 +30,16 @@ class ExceptionsTrap(contextlib.AbstractContextManager):
         if exctype is None:
             return True
         self.errors += 1
-        self.log('  ERROR', fg='red')
+        self.log('  ERROR', fg='red', level=-1)
         if issubclass(exctype, Error):
             # Beangulp validation error.
-            self.log(textwrap.indent(str(excinst), '  '))
+            self.log(textwrap.indent(str(excinst), '  '), level=-1)
             return True
         if issubclass(exctype, Exception):
             # Unexpected exception.
-            self.log('  Exception in importer code.')
+            self.log('  Exception in importer code.', level=-1)
             exc = ''.join(traceback.format_exception(exctype, excinst, exctb))
-            self.log(textwrap.indent(exc, '  ').rstrip())
+            self.log(textwrap.indent(exc, '  ').rstrip(), level=-1)
             return True
         return False
 
